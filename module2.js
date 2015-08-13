@@ -45,10 +45,15 @@ $(document).ready(function() {
     console.log(colour.green);
     console.log(colour.blue);
     console.log(colour.alpha);
+
     colourise(img,colour, 50);
+
     sepia(img);
+
     clip(img, 100);
+
 });
+
 
 function colourise(img, colour, level) {
 
@@ -57,7 +62,7 @@ function colourise(img, colour, level) {
     var data = pixels.data;
 
     for (var i = 0; i < all; i += 4) {
-        var originalRGBA = new RGBA(data[i], data[i+1], data[i+2], data[i+3]);
+        var originalRGBA = new RGBA(data[i], data[i + 1], data[i + 2], data[i + 3]);
         var modifiedRGBA = colourisePixel(originalRGBA, colour, level);
         setPixel(data, i, modifiedRGBA);
     }
@@ -65,7 +70,7 @@ function colourise(img, colour, level) {
 }
 
 
-function colourisePixel (originalRGBA, colour, level) {
+function colourisePixel(originalRGBA, colour, level) {
     var diffRed = (originalRGBA.red - colour.red) * (level / 100);
     var modifiedRed = originalRGBA.red - diffRed;
 
@@ -85,8 +90,8 @@ function sepia(img) {
     var all = pixels.data.length;
     var data = pixels.data;
 
-    for (var i = 0; i < all;i += 4) {
-        var originalRGBA = new RGBA(data[i], data[i+1], data[i+2], data[i+3]);
+    for (var i = 0; i < all; i += 4) {
+        var originalRGBA = new RGBA(data[i], data[i + 1], data[i + 2], data[i + 3]);
         var sepiaRGBA = sepiaPixel(originalRGBA);
         setPixel(data, i, sepiaRGBA);
     }
@@ -102,7 +107,8 @@ function sepiaPixel(colour) {
     return new RGBA(modifiedRed, modifiedGreen, modifiedBlue, colour.alpha);
 
 }
-function sepia(img){
+
+function sepia(img) {
     var pixels = ImageUtils.getPixels(img);
     var all = pixels.data.length;
     var data = pixels.data;
@@ -116,10 +122,10 @@ function sepia(img){
 }
 
 function setPixel(data, i, colour) {
-        data[i] = colour.red;
-        data[i + 1] = colour.green;
-        data[i + 2] = colour.blue;
-        data[i + 3] = colour.alpha;
+    data[i] = colour.red;
+    data[i + 1] = colour.green;
+    data[i + 2] = colour.blue;
+    data[i + 3] = colour.alpha;
 }
 
 function clip(img, adjustment) {
@@ -131,23 +137,22 @@ function clip(img, adjustment) {
         var originalRGBA = new RGBA(data[i], data[i + 1], data[i + 2], data[i + 3]);
         var clipRGBA = clipPixel(originalRGBA, adjustment);
         setPixel(data, i, clipRGBA);
-    }
+        }
     ImageUtils.putPixels(pixels, img.width, img.height);
 }
-
 function clipPixel(colour, range) {
 
     var clippedRed = 0;
     if (colour.red > 255 - range) {
-        clippedRed = 255;
+            clippedRed = 255;
     }
     var clippedGreen = 0;
     if (colour.green > 255 - range) {
-        clippedGreen = 255;
+            clippedGreen = 255;
     }
     var clippedBlue = 0;
     if (colour.blue > 255 - range) {
-        clippedBlue = 255;
+            clippedBlue = 255;
     }
     return new RGBA(clippedRed, clippedGreen, clippedBlue, colour.alpha);
 }

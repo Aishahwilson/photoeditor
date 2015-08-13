@@ -99,11 +99,68 @@ class RGBA {
 
 
 // class definitions here
+//var height = 5;
+//var pixelGrid = [];
+//for(var y = 0; y < height; y++) {
+    //pixelGrid[y] = [];
+//}
+
+class ImageModel {
+    constructor(heightValue, widthValue, pixelGridValue) {
+        this.height = heightValue;
+        this.width = widthValue;
+        //this.pixelGrid = pixelGridValue;
+        if (pixelGridValue) {
+            this.pixelGrid = pixelGridValue;
+        }
+        else {
+            this.pixelGrid = initializePixelGrid(heightValue);
+        }
+    }
+}
+
+
+function initializePixelGrid(height) {
+    var pixelGrid = [];
+    for (var y = 0; y < height; y++) {
+        pixelGrid[y] = [];
+    }
+    return pixelGrid;
+}
+
+function verticalMirror(imageModel) {
+
+    var mirrorImageModel = new ImageModel(imageModel.height, imageModel.width);
+
+    for (var y = 0; y < imageModel.height; y++) {
+        for (var x = 0; x < imageModel.width / 2; x++) {
+            var mirroredIndex = imageModel.width - 1 - x;
+            mirrorImageModel.pixelGrid[y][x] = imageModel.pixelGrid[y][mirroredIndex];
+            mirrorImageModel.pixelGrid[y][mirroredIndex] = imageModel.pixelGrid[y][x];
+        }
+    }
+
+    return mirrorImageModel;
+}
 
 $(document).ready(function() {
     var img = new Image();
     img.src = "img/cat.jpg";
+    var colorNames = [["red", "pink"],["blue", "cyan"]];
+    colorNames.push("red");
+    colorNames.push("blue");
+    console.log(colorNames[0][0]);
+    console.log(colorNames[0][1]);
+    console.log(colorNames[1][0]);
+    console.log(colorNames[1][1]);
 
+    var pixels = initializePixelGrid(10);
+    pixels[0][0] = new RGBA(255, 0, 0, 255);
 
+    var cat = ImageUtils.fromImgSrc("img/cat.jpg");
+    ImageUtils.drawImageModel(cat);
+
+    var cat = ImageUtils.fromImgSrc("img/cat.jpg");
+    ImageUtils.drawImageModel(verticalMirror(cat));
 
 });
