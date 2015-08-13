@@ -1,3 +1,4 @@
+
 class ImageUtils {
 
     static getCanvas(w, h) {
@@ -142,3 +143,4 @@ function makeFunky(img) {
     }
     ImageUtils.putPixels(pixels, img.width, img.height);
 }
+
